@@ -1,18 +1,14 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Typography } from '@douyinfe/semi-ui';
+// 移除了 useTranslation，因为我们要强制英文
 import { getFooterHTML, getSystemName } from '../../helpers';
-import { StatusContext } from '../../context/Status'; // 重新引入状态上下文
+import { StatusContext } from '../../context/Status';
 
 const FooterBar = () => {
-  const { t } = useTranslation();
   const [footer, setFooter] = useState(getFooterHTML());
   const systemName = getSystemName() || 'ZX AI Center';
   
-  // 获取服务器状态，拿到启动时间
   const [statusState] = useContext(StatusContext);
   const startTime = statusState?.status?.start_time || 0;
-
   const [uptime, setUptime] = useState('');
 
   const loadFooter = () => {
@@ -24,73 +20,66 @@ const FooterBar = () => {
 
   const currentYear = new Date().getFullYear();
 
-  // --- 核心逻辑：计算运行时长 ---
   useEffect(() => {
     const updateUptime = () => {
-      // 如果没有获取到启动时间，就不显示
       if (!startTime) return;
-
       const now = Math.floor(Date.now() / 1000);
       const duration = now - startTime;
-
       const days = Math.floor(duration / 86400);
       const hours = Math.floor((duration % 86400) / 3600);
       const minutes = Math.floor((duration % 3600) / 60);
       const seconds = duration % 60;
-
-      // 格式化输出：例如 "5天 12小时 30分 45秒"
-      setUptime(`${days} ${t('天')} ${hours} ${t('小时')} ${minutes} ${t('分')} ${seconds} ${t('秒')}`);
+      
+      // 修改为极客风简写: 12d 5h 30m 20s
+      setUptime(`${days}d ${hours}h ${minutes}m ${seconds}s`);
     };
-
-    // 立即执行一次
     updateUptime();
-    
-    // 每秒刷新一次
     const timer = setInterval(updateUptime, 1000);
-
     return () => clearInterval(timer);
-  }, [startTime, t]);
+  }, [startTime]);
 
   const customFooter = useMemo(
     () => (
       <footer className='relative h-auto py-8 px-6 w-full flex flex-col items-center justify-center overflow-hidden'>
-        <div className='flex flex-col md:flex-row items-center justify-center w-full max-w-[1110px] gap-2'>
-          <div className='flex flex-wrap items-center gap-2 justify-center'>
+        <div className='flex flex-col md:flex-row items-center justify-center w-full max-w-[1110px] gap-2 select-none'>
+          
+          <div className='flex flex-wrap items-center gap-3 justify-center'>
             
-            {/* 版权信息 */}
-            <Typography.Text className='text-sm !text-semi-color-text-1'>
-              © {currentYear} {systemName} {t('版权所有')}
-            </Typography.Text>
+            {/* Copyright 部分 - 纯英文 */}
+            <span className='footer-text'>
+              Copyright © {currentYear} {systemName}. All Rights Reserved.
+            </span>
             
-            <span className='hidden md:inline text-gray-400'>|</span>
+            <span className='hidden md:inline text-gray-700'>|</span>
 
-            {/* 技术支持 */}
-            <Typography.Text className='text-sm !text-semi-color-text-1'>
+            {/* 技术支持 - 纯英文 */}
+            <span className='footer-text'>
               Powered by 
               <a
                 href='#' 
                 target='_blank' 
                 rel='noopener noreferrer'
-                className='ml-1 !text-semi-color-primary font-medium no-underline hover:underline'
+                className='ml-1 footer-link'
               >
                 ZX Tech
               </a>
-            </Typography.Text>
+            </span>
 
-            {/* --- 新增：运行时长模块 --- */}
+            {/* 运行时长 - 纯英文 + 极客简写 */}
             {uptime && (
               <>
-                <span className='hidden md:inline text-gray-400'>|</span>
-                <div className='flex items-center select-none cursor-help' title={`系统已稳定运行 ${uptime}`}>
-                  {/* CSS 呼吸灯小绿点 */}
-                  <span className="relative flex h-2.5 w-2.5 mr-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                  </span>
+                <span className='hidden md:inline text-gray-700'>|</span>
+                
+                <div className='flex items-center cursor-help' title='System Operational'>
+                  {/* 呼吸灯容器 */}
+                  <div className="status-dot-container">
+                    <div className="status-dot"></div>
+                  </div>
                   
-                  <Typography.Text className='text-sm !text-semi-color-text-1 font-mono'>
-                    {t('已运行')}: {uptime}
-                  </Typography.Text>
+                  {/* Uptime: 10d 2h 30m 15s */}
+                  <span className='footer-text font-mono' style={{ fontSize: '13px' }}>
+                    System Uptime: {uptime}
+                  </span>
                 </div>
               </>
             )}
@@ -99,7 +88,7 @@ const FooterBar = () => {
         </div>
       </footer>
     ),
-    [systemName, t, currentYear, uptime],
+    [systemName, currentYear, uptime],
   );
 
   useEffect(() => {

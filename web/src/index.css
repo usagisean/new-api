@@ -834,3 +834,56 @@ html.dark .with-pastel-balls::before {
 .semi-datepicker-range-input {
   border-radius: 10px !important;
 }
+/* --- 底部呼吸灯特效 (复刻发卡网风格) --- */
+@keyframes breathing-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    transform: scale(0.95);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    transform: scale(0.95);
+  }
+}
+
+.status-dot-container {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e; /* 鲜艳的绿色 */
+  border-radius: 50%;
+  /* 这里应用呼吸动画 */
+  animation: breathing-glow 2s infinite ease-in-out;
+}
+
+/* 底部文字颜色优化：默认灰色，悬浮变亮 */
+.footer-text {
+  color: #6b7280; /* 灰调，不刺眼 */
+  font-size: 0.875rem; /* text-sm */
+  transition: color 0.3s ease;
+}
+
+.footer-text:hover {
+  color: #9ca3af; /* 悬浮稍微变亮 */
+}
+
+.footer-link {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #22c55e; /* 悬浮变成绿色，呼应呼吸灯 */
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5); /* 加一点霓虹光晕 */
+}
