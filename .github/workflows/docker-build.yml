@@ -1,0 +1,36 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ "main" ] # 当 main 分支有 push 时触发
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # 必须赋予写入包的权限
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: actions/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: actions/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: actions/docker-build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile # 确认你仓库根目录下有这个文件
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/new-api:latest
+            ghcr.io/${{ github.repository_owner }}/new-api:${{ github.sha }}
