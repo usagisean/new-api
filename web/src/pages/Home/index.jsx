@@ -113,7 +113,7 @@ const Home = () => {
   }, [text.title]);
 
   const handleStart = () => window.location.href = '/register';
-  const handleDocs = () => window.open('https://docs.zxai.zixiang.us', '_blank');
+  const handleDocs = () => window.open('https://docs.ai.zixiang.us', '_blank');
 
   return (
     <div style={styles.container}>
@@ -188,7 +188,7 @@ const Home = () => {
 
         {/* Footer */}
         <div style={styles.footer}>
-          {text.dev} <code style={styles.code}>https://zxai.zixiang.us</code>
+          {text.dev} <code style={styles.code}>https://ai.zixiang.us</code>
         </div>
       </div>
     </div>
