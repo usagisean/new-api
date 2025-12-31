@@ -20,86 +20,103 @@ const SvgIcons = {
 
 /**
  * =========================================================================
- * 2. 字典配置 (6种语言)
+ * 2. 字典配置 (6种语言 - 厂商维度版)
  * =========================================================================
  */
 const contentMap = {
+  // 1. 中文：强调“全系列”
   zh: {
     title: "ZX AI 聚合网关",
     subtitle: "企业级大模型 API 统一接入平台",
-    desc: "一个接口连接世界 · 极速响应 · 官方同源 · 隐私无忧",
+    desc: "万模归一 · 毫秒响应 · 官方直连 · 隐私盾",
     startBtn: "立即注册",
     docsBtn: "开发文档",
-    giftContent: "🎁 新用户限时福利：注册即送 $0.2 美金，畅享 DeepSeek / GPT-4o",
-    card1: "全球 CDN 加速", card1_desc: "边缘节点智能路由，毫秒级响应，拒绝卡顿",
-    card2: "官方原生渠道", card2_desc: "直连 OpenAI/Claude/DeepSeek，拒绝逆向掺水",
-    card3: "企业级隐私保护", card3_desc: "数据加密传输，无日志留存，保障业务安全",
-    trusted: "已赋能 40+ 创新业务",
+    // 修改点：去掉了 GPT-4o，改为 OpenAI / DeepSeek，暗示支持全系列
+    giftContent: "🎁 开发者测试通道：注册即享免费试用额度，零成本评测 DeepSeek / OpenAI 全系模型",
+    card1: "全球边缘加速", card1_desc: "智能路由网络覆盖全球，延迟低至毫秒级，拒绝丢包",
+    card2: "纯净官方渠道", card2_desc: "拒绝逆向/掺水，直连 OpenAI / DeepSeek 原厂 API",
+    card3: "数据零留存", card3_desc: "企业级加密隧道传输，无日志策略，守护业务核心机密",
+    trusted: "已赋能 20+ 创新业务",
     dev: "API BaseUrl:"
   },
+  
+  // 2. English: Access to Providers
   en: {
     title: "ZX AI Gateway",
-    subtitle: "Unified Interface for Global LLMs",
-    desc: "One API to Rule Them All · Fast · Reliable · Secure",
+    subtitle: "Enterprise Unified Interface for LLMs",
+    desc: "One Interface for All Models · Ultra-Low Latency · Native Channels · Secure",
     startBtn: "Get Started",
     docsBtn: "Documentation",
-    giftContent: "🎁 New User Offer: Get $0.20 Free Credit for DeepSeek / GPT-4o",
-    card1: "Global CDN", card1_desc: "Smart routing with edge nodes for millisecond latency.",
-    card2: "Official Sources", card2_desc: "Direct access to OpenAI/Claude. No reverse engineered APIs.",
-    card3: "Enterprise Privacy", card3_desc: "End-to-end encryption. Zero-log policy for your data.",
-    trusted: "Powering 40+ AI Apps",
+    // "Access to DeepSeek & OpenAI models"
+    giftContent: "🎁 Developer Trial: Start building for free with instant access to DeepSeek & OpenAI models.",
+    card1: "Global Edge CDN", card1_desc: "Intelligent routing network with millisecond latency worldwide.",
+    card2: "Official Pipelines", card2_desc: "Direct connection to OpenAI/Claude. Zero reverse-engineered APIs.",
+    card3: "Zero-Log Privacy", card3_desc: "End-to-end encryption tunnel. Your business data remains yours.",
+    trusted: "Trusted by 40+ Tech Teams",
     dev: "API BaseUrl:"
   },
+
+  // 3. French
   fr: {
     title: "Passerelle IA ZX",
     subtitle: "Interface unifiée pour les grands modèles de langage",
-    desc: "Une seule API pour tout connecter · Rapide · Fiable · Sécurisé",
+    desc: "Une API pour tout connecter · Latence ultra-faible · Canaux natifs · Sécurisé",
     startBtn: "Commencer",
     docsBtn: "Documentation",
-    giftContent: "🎁 Offre de bienvenue : 0,20 $ offerts pour tester DeepSeek / GPT-4o",
-    card1: "CDN Mondial", card1_desc: "Routage intelligent pour une latence minimale.",
-    card2: "Sources Officielles", card2_desc: "Accès direct à OpenAI/Claude. Pas d'API inversée.",
-    card3: "Confidentialité", card3_desc: "Chiffrement de bout en bout. Politique zéro log.",
-    trusted: "Propulse 40+ Applications",
+    // 替换为 OpenAI
+    giftContent: "🎁 Essai Développeur : Accès gratuit immédiat aux modèles DeepSeek & OpenAI pour évaluation.",
+    card1: "CDN Edge Mondial", card1_desc: "Réseau de routage intelligent avec une latence millimétrée.",
+    card2: "Canaux Officiels", card2_desc: "Connexion directe. Aucune API issue de rétro-ingénierie.",
+    card3: "Confidentialité Totale", card3_desc: "Chiffrement de bout en bout. Politique stricte de zéro log.",
+    trusted: "Utilisé par 40+ équipes tech",
     dev: "API BaseUrl:"
   },
+
+  // 4. Japanese
   ja: {
     title: "ZX AI ゲートウェイ",
-    subtitle: "世界最高峰のLLMへの統一アクセス",
-    desc: "単一のAPIで世界とつながる · 高速 · 安定 · 安全",
+    subtitle: "エンタープライズ向けLLM統一プラットフォーム",
+    desc: "万能インターフェース · 超低遅延 · 公式ルート · 完全なプライバシー",
     startBtn: "今すぐ始める",
     docsBtn: "開発ドキュメント",
-    giftContent: "🎁 新規特典：$0.2 クレジット無料配布中 (DeepSeek / GPT-4o)",
-    card1: "グローバルCDN", card1_desc: "エッジノードによる高速ルーティング、低遅延を実現",
-    card2: "公式ルート", card2_desc: "OpenAI/Claude等と直接接続。純粋な公式APIのみ提供",
-    card3: "プライバシー保護", card3_desc: "企業レベルの暗号化。ログ保存なしで安心",
-    trusted: "40以上のアプリで採用",
+    // 强调厂商
+    giftContent: "🎁 開発者トライアル：登録後すぐにDeepSeekやOpenAIのモデルを無料で評価可能。",
+    card1: "グローバルEdge CDN", card1_desc: "世界規模のインテリジェントルーティングでミリ秒単位の応答を実現。",
+    card2: "純正公式ルート", card2_desc: "OpenAI/DeepSeekと直接接続。リバースエンジニアリングなし。",
+    card3: "ログなしポリシー", card3_desc: "エンドツーエンド暗号化。業務データの保存は一切なし。",
+    trusted: "40以上の技術チームが導入",
     dev: "API BaseUrl:"
   },
+
+  // 5. Russian
   ru: {
     title: "Шлюз ZX AI",
-    subtitle: "Единый интерфейс для передовых LLM",
-    desc: "Один API для всего мира · Быстро · Надежно · Безопасно",
+    subtitle: "Единый корпоративный интерфейс для LLM",
+    desc: "Один API для всего · Ультра-низкая задержка · Официальные каналы · Безопасность",
     startBtn: "Начать",
     docsBtn: "Документация",
-    giftContent: "🎁 Бонус: $0.20 на счет для теста DeepSeek / GPT-4o",
-    card1: "Глобальный CDN", card1_desc: "Умная маршрутизация и миллисекундная задержка.",
-    card2: "Официальные каналы", card2_desc: "Прямой доступ к OpenAI/Claude. Никаких серых схем.",
-    card3: "Приватность", card3_desc: "Шифрование данных и политика отсутствия логов.",
-    trusted: "Используется в 40+ проектах",
+    // 强调厂商
+    giftContent: "🎁 Тестовый доступ: Бесплатная оценка моделей DeepSeek и OpenAI сразу после регистрации.",
+    card1: "Глобальный Edge CDN", card1_desc: "Умная маршрутизация с миллисекундной задержкой по всему миру.",
+    card2: "Официальные каналы", card2_desc: "Прямое подключение к OpenAI. Никакого реверс-инжиниринга.",
+    card3: "Приватность данных", card3_desc: "Сквозное шифрование. Политика полного отсутствия логов.",
+    trusted: "Выбор 40+ технологических команд",
     dev: "API BaseUrl:"
   },
+
+  // 6. Vietnamese
   vi: {
     title: "Cổng Kết Nối ZX AI",
-    subtitle: "Giao diện hợp nhất cho các mô hình AI hàng đầu",
-    desc: "Một API kết nối tất cả · Nhanh chóng · Ổn định · Bảo mật",
+    subtitle: "Nền tảng hợp nhất API LLM cấp doanh nghiệp",
+    desc: "Một kết nối cho tất cả · Độ trễ cực thấp · Kênh chính hãng · Bảo mật tuyệt đối",
     startBtn: "Bắt đầu ngay",
     docsBtn: "Tài liệu",
-    giftContent: "🎁 Ưu đãi mới: Tặng $0.20 dùng thử DeepSeek / GPT-4o miễn phí",
-    card1: "CDN Toàn cầu", card1_desc: "Định tuyến thông minh, độ trễ cực thấp.",
-    card2: "Nguồn chính hãng", card2_desc: "Kết nối trực tiếp OpenAI/Claude. Không dùng API lậu.",
-    card3: "Bảo mật cao", card3_desc: "Mã hóa dữ liệu doanh nghiệp. Không lưu nhật ký.",
-    trusted: "Được tin dùng bởi 40+ dự án",
+    // 强调厂商
+    giftContent: "🎁 Dùng thử cho Developer: Trải nghiệm miễn phí các mô hình DeepSeek & OpenAI ngay khi đăng ký.",
+    card1: "CDN Edge Toàn cầu", card1_desc: "Mạng định tuyến thông minh với độ trễ tính bằng mili giây.",
+    card2: "Kênh chính hãng", card2_desc: "Kết nối trực tiếp. Nói không với API dịch ngược.",
+    card3: "Không lưu nhật ký", card3_desc: "Mã hóa đầu cuối. Bảo vệ tuyệt đối dữ liệu doanh nghiệp.",
+    trusted: "Được tin dùng bởi 40+ đội ngũ công nghệ",
     dev: "API BaseUrl:"
   }
 };
@@ -125,7 +142,7 @@ const Home = () => {
         
         {/* Hero 区域 */}
         <div style={styles.heroSection}>
-          <div style={styles.badge}>Kudos to the new API development team!</div>
+          <div style={styles.badge}>⚡️ ZX High-Performance Gateway</div>
           <h1 style={styles.mainTitle}>{text.title}</h1>
           <p style={styles.subTitle}>{text.subtitle}</p>
           <p style={styles.description}>{text.desc}</p>
