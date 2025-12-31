@@ -78,7 +78,7 @@ const FooterBar = () => {
                   
                   {/* Uptime: 10d 2h 30m 15s */}
                   <span className='footer-text font-mono' style={{ fontSize: '13px' }}>
-                    System Uptime: {uptime}
+                    Operational: {uptime}
                   </span>
                 </div>
               </>
