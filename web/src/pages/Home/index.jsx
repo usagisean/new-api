@@ -125,7 +125,7 @@ const Home = () => {
         
         {/* Hero 区域 */}
         <div style={styles.heroSection}>
-          <div style={styles.badge}>New API 2.0</div>
+          <div style={styles.badge}>Kudos to the new API development team!</div>
           <h1 style={styles.mainTitle}>{text.title}</h1>
           <p style={styles.subTitle}>{text.subtitle}</p>
           <p style={styles.description}>{text.desc}</p>
