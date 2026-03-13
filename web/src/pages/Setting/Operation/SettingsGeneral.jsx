@@ -126,9 +126,9 @@ export default function GeneralSettings(props) {
   };
 
   useEffect(() => {
-    const currentInputs = {};
+    const currentInputs = { ...inputs };
     for (let key in props.options) {
-      if (Object.keys(inputs).includes(key)) {
+      if (Object.keys(currentInputs).includes(key)) {
         currentInputs[key] = props.options[key];
       }
     }
