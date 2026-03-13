@@ -137,51 +137,161 @@ const Home = () => {
 
   return (
     <div style={styles.container}>
-      {/* 这里移除了极光背景，因为极光是深色的，在浅色模式下会很脏。
-        如果你需要极光，需要写复杂的判断逻辑。现在先保证干净、可用。
-      */}
+      <style>
+        {`
+          .premium-primary-btn {
+            background: linear-gradient(135deg, var(--semi-color-primary) 0%, var(--semi-color-primary-hover) 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px 0 rgba(var(--semi-color-primary), 0.39);
+          }
+          .premium-primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--semi-color-primary), 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+          }
+          
+          .premium-feature-card {
+            background: rgba(var(--semi-color-bg-1), 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--semi-color-border);
+            border-radius: 24px;
+            padding: 40px 32px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+          }
+          .premium-feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+          }
+          .premium-feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            border-color: var(--semi-color-primary-light-default);
+            background: rgba(var(--semi-color-bg-1), 0.6);
+          }
+          .premium-feature-card:hover::before {
+            opacity: 1;
+          }
+          
+          .premium-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            background: var(--semi-color-bg-0);
+            box-shadow: inset 0 0 0 1px var(--semi-color-border);
+            transition: transform 0.3s;
+          }
+          .premium-feature-card:hover .premium-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+          }
 
+          .premium-logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--semi-color-text-2);
+            opacity: 0.6;
+            cursor: pointer;
+            width: 90px;
+            transition: all 0.3s;
+            filter: grayscale(100%);
+          }
+          .premium-logo-box:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            color: var(--semi-color-text-0);
+            transform: translateY(-4px);
+          }
+          
+          .premium-notice-bar {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(var(--semi-color-bg-1), 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--semi-color-border);
+            color: var(--semi-color-text-1);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 80px;
+            transition: all 0.3s;
+            cursor: default;
+          }
+          .premium-notice-bar:hover {
+            border-color: var(--semi-color-primary-light-default);
+            color: var(--semi-color-text-0);
+            box-shadow: 0 0 20px rgba(var(--semi-color-primary), 0.1);
+          }
+
+          /* text gradient utility */
+          .text-gradient {
+            background: linear-gradient(to right, var(--semi-color-text-0), var(--semi-color-text-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        `}
+      </style>
       <div style={styles.contentWrapper}>
         
         {/* Hero 区域 */}
         <div style={styles.heroSection}>
           <div style={styles.badge}>⚡️ ZX High-Performance Gateway</div>
-          <h1 style={styles.mainTitle}>{text.title}</h1>
+          <h1 style={styles.mainTitle} className="text-gradient">{text.title}</h1>
           <p style={styles.subTitle}>{text.subtitle}</p>
           <p style={styles.description}>{text.desc}</p>
           
           {/* 按钮组 */}
-          <div style={styles.buttonGroup}>
-            <button style={styles.primaryBtn} onClick={handleStart}>
-              <IconUserAdd style={{marginRight:8}} /> {text.startBtn}
+          <div style={{ marginTop: '48px', display: 'flex', justifyContent: 'center' }}>
+            <button className="premium-primary-btn" onClick={handleStart}>
+              <IconUserAdd style={{ marginRight: 8, fontSize: '1.2rem' }} /> {text.startBtn}
             </button>
-            {/* 隐藏了开发文档按钮 */}
           </div>
         </div>
 
         {/* 福利条 */}
-        <div style={styles.noticeBar}>
-            {text.giftContent}
+        <div className="premium-notice-bar">
+            🎉 {text.giftContent}
         </div>
 
         {/* 特性卡片 */}
         <div style={styles.featureGrid}>
-          <div style={styles.featureCard}>
-            <div style={{...styles.iconWrapper, background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8'}}>
+          <div className="premium-feature-card">
+            <div className="premium-icon-wrapper" style={{ color: '#38bdf8' }}>
               <IconBolt size="extra-large" />
             </div>
             <h3 style={styles.cardTitle}>{text.card1}</h3>
             <p style={styles.cardDesc}>{text.card1_desc}</p>
           </div>
-          <div style={styles.featureCard}>
-            <div style={{...styles.iconWrapper, background: 'rgba(129, 140, 248, 0.15)', color: '#818cf8'}}>
+          <div className="premium-feature-card">
+            <div className="premium-icon-wrapper" style={{ color: '#818cf8' }}>
               <IconVerify size="extra-large" />
             </div>
             <h3 style={styles.cardTitle}>{text.card2}</h3>
             <p style={styles.cardDesc}>{text.card2_desc}</p>
           </div>
-          <div style={styles.featureCard}>
-            <div style={{...styles.iconWrapper, background: 'rgba(52, 211, 153, 0.15)', color: '#34d399'}}>
+          <div className="premium-feature-card">
+            <div className="premium-icon-wrapper" style={{ color: '#34d399' }}>
               <IconSafe size="extra-large" />
             </div>
             <h3 style={styles.cardTitle}>{text.card3}</h3>
@@ -204,7 +314,9 @@ const Home = () => {
           </div>
         </div>
 
+        <div style={styles.footer}>
           {text.dev} <code style={styles.code}>{window.location.origin}</code>
+        </div>
       </div>
     </div>
   );
@@ -212,9 +324,9 @@ const Home = () => {
 
 // 小组件
 const LogoBox = ({ icon, name }) => (
-  <div style={styles.logoBox} title={name}>
+  <div className="premium-logo-box" title={name}>
     {icon}
-    <span style={{fontSize:'12px', marginTop:'4px', opacity:0.7}}>{name}</span>
+    <span style={{fontSize:'12px', marginTop:'8px', fontWeight: 500}}>{name}</span>
   </div>
 );
 
@@ -229,25 +341,24 @@ const styles = {
   container: {
     position: 'relative',
     backgroundColor: 'var(--semi-color-bg-0)',
-    // 科技感网格与顶部柔和光晕背景
     backgroundImage: `
-      radial-gradient(circle at 50% 0%, var(--semi-color-primary-light-default) 0%, transparent 60%),
-      linear-gradient(var(--semi-color-border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--semi-color-border) 1px, transparent 1px)
+      radial-gradient(circle at 50% -10%, var(--semi-color-primary-light-default) 0%, transparent 50%),
+      linear-gradient(rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(128, 128, 128, 0.05) 1px, transparent 1px)
     `,
-    backgroundSize: '100% 100%, 30px 30px, 30px 30px',
+    backgroundSize: '100% 100%, 40px 40px, 40px 40px',
     backgroundPosition: 'center top, center top, center top',
     minHeight: 'calc(100vh - 64px)',
     color: 'var(--semi-color-text-0)',
     overflow: 'hidden',
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
   },
   contentWrapper: {
     position: 'relative',
     zIndex: 1,
-    maxWidth: '1080px',
+    maxWidth: '1200px',
     margin: '0 auto',
-    padding: '80px 24px',
+    padding: '100px 24px',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -255,115 +366,71 @@ const styles = {
   },
   
   // Hero Styles
-  heroSection: { marginBottom: '60px', maxWidth: '800px' },
+  heroSection: { marginBottom: '50px', maxWidth: '850px' },
   badge: {
     display: 'inline-block',
-    padding: '4px 12px',
-    // 使用变量：背景填充色
-    background: 'var(--semi-color-fill-0)',
-    border: '1px solid var(--semi-color-border)',
-    borderRadius: '20px',
-    fontSize: '0.8rem',
-    color: 'var(--semi-color-text-2)',
-    marginBottom: '20px',
-    fontWeight: 500
+    padding: '6px 16px',
+    background: 'rgba(var(--semi-color-primary), 0.1)',
+    border: '1px solid rgba(var(--semi-color-primary), 0.2)',
+    boxShadow: 'inset 0 0 10px rgba(var(--semi-color-primary), 0.1)',
+    borderRadius: '30px',
+    fontSize: '0.85rem',
+    color: 'var(--semi-color-primary)',
+    marginBottom: '24px',
+    fontWeight: 600,
+    letterSpacing: '0.5px'
   },
   mainTitle: {
-    fontSize: '3.8rem',
+    fontSize: '5rem',
     fontWeight: 800,
-    marginBottom: '20px',
+    marginBottom: '24px',
     lineHeight: 1.1,
-    // 这里的渐变色可能在浅色模式下不明显，我们简单处理：直接用主文字色
-    // 如果你想要渐变，必须写两套逻辑，这里先保证能看清
-    color: 'var(--semi-color-text-0)', 
+    letterSpacing: '-2px',
   },
-  subTitle: { fontSize: '1.5rem', fontWeight: 500, color: 'var(--semi-color-text-1)', marginBottom: '16px' },
-  description: { fontSize: '1.1rem', color: 'var(--semi-color-text-2)', lineHeight: 1.6 },
-
-  // Buttons
-  buttonGroup: { marginTop: '32px', display: 'flex', gap: '16px', justifyContent: 'center' },
-  primaryBtn: {
-    background: 'var(--semi-color-primary)', // 使用主题主色
-    color: '#fff',
-    border: 'none',
-    padding: '12px 32px',
-    fontSize: '1rem',
-    fontWeight: 600,
-    borderRadius: '8px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
+  subTitle: { 
+    fontSize: '1.6rem', 
+    fontWeight: 500, 
+    color: 'var(--semi-color-text-1)', 
+    marginBottom: '20px',
+    letterSpacing: '-0.5px'
   },
-  secondaryBtn: {
-    background: 'var(--semi-color-fill-0)',
-    color: 'var(--semi-color-text-0)',
-    border: '1px solid var(--semi-color-border)',
-    padding: '12px 32px',
-    fontSize: '1rem',
-    fontWeight: 500,
-    borderRadius: '8px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  // Notice Bar
-  noticeBar: {
-    background: 'rgba(250, 204, 21, 0.1)',
-    border: '1px solid rgba(250, 204, 21, 0.2)',
-    color: '#EAB308', // 黄色字体加深一点，防止在白底看不清
-    padding: '10px 24px',
-    borderRadius: '30px',
-    fontSize: '0.95rem',
-    fontWeight: 500,
-    marginBottom: '80px',
+  description: { 
+    fontSize: '1.2rem', 
+    color: 'var(--semi-color-text-2)', 
+    lineHeight: 1.7,
+    maxWidth: '700px',
+    margin: '0 auto'
   },
 
   // Feature Grid
   featureGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: '32px',
     width: '100%',
-    marginBottom: '100px',
+    marginBottom: '120px',
   },
-  featureCard: {
-    // 关键：卡片背景色自适应
-    background: 'var(--semi-color-fill-0)',
-    border: '1px solid var(--semi-color-border)',
-    borderRadius: '16px',
-    padding: '32px',
-    textAlign: 'left',
-    transition: 'transform 0.2s',
-  },
-  iconWrapper: {
-    width: '48px',
-    height: '48px',
-    borderRadius: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '20px',
-  },
-  cardTitle: { color: 'var(--semi-color-text-0)', fontSize: '1.25rem', fontWeight: 600, marginBottom: '10px' },
-  cardDesc: { color: 'var(--semi-color-text-2)', fontSize: '0.95rem', lineHeight: 1.6 },
+  cardTitle: { color: 'var(--semi-color-text-0)', fontSize: '1.3rem', fontWeight: 600, marginBottom: '12px' },
+  cardDesc: { color: 'var(--semi-color-text-2)', fontSize: '1rem', lineHeight: 1.6 },
 
   // Logo Section
-  logoSection: { width: '100%' },
-  logoTitle: { color: 'var(--semi-color-text-2)', fontSize: '0.9rem', fontWeight: 600, marginBottom: '30px', textTransform: 'uppercase', letterSpacing: '1px' },
-  logoRow: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '24px' },
-  logoBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    color: 'var(--semi-color-text-1)', // Logo 颜色也随主题变
-    opacity: 0.8,
-    cursor: 'pointer',
-    width: '80px'
+  logoSection: { 
+    width: '100%',
+    padding: '60px 0',
+    borderTop: '1px solid var(--semi-color-border)'
   },
+  logoTitle: { 
+    color: 'var(--semi-color-text-2)', 
+    fontSize: '0.9rem', 
+    fontWeight: 600, 
+    marginBottom: '40px', 
+    textTransform: 'uppercase', 
+    letterSpacing: '3px' 
+  },
+  logoRow: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px' },
 
-  footer: { marginTop: '80px', color: 'var(--semi-color-text-2)', fontSize: '0.85rem' },
-  code: { background: 'var(--semi-color-fill-1)', padding: '4px 8px', borderRadius: '4px', color: 'var(--semi-color-primary)', fontFamily: 'monospace', marginLeft: '10px' }
+  footer: { marginTop: '60px', color: 'var(--semi-color-text-2)', fontSize: '0.85rem' },
+  code: { background: 'var(--semi-color-fill-0)', padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--semi-color-border)', fontFamily: 'monospace', marginLeft: '10px' }
 };
 
 export default Home;
