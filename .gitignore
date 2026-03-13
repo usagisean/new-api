@@ -18,7 +18,7 @@ tiktoken_cache
 .gocache
 .gomodcache/
 .cache
-web/bun.lock
+# web/bun.lock (removed to allow CI/CD build)
 
 electron/node_modules
 electron/dist

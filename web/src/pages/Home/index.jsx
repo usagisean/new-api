@@ -206,10 +206,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div style={styles.footer}>
-          {text.dev} <code style={styles.code}>https://ai.zixiang.us</code>
-        </div>
+          {text.dev} <code style={styles.code}>{window.location.origin}</code>
       </div>
     </div>
   );
