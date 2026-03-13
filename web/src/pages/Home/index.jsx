@@ -155,9 +155,7 @@ const Home = () => {
             <button style={styles.primaryBtn} onClick={handleStart}>
               <IconUserAdd style={{marginRight:8}} /> {text.startBtn}
             </button>
-            <button style={styles.secondaryBtn} onClick={handleDocs}>
-              <IconCode style={{marginRight:8}} /> {text.docsBtn}
-            </button>
+            {/* 隐藏了开发文档按钮 */}
           </div>
         </div>
 
@@ -230,8 +228,15 @@ const LogoBox = ({ icon, name }) => (
 const styles = {
   container: {
     position: 'relative',
-    // 移除死板的黑色背景，改用系统变量
-    background: 'var(--semi-color-bg-0)',
+    backgroundColor: 'var(--semi-color-bg-0)',
+    // 科技感网格与顶部柔和光晕背景
+    backgroundImage: `
+      radial-gradient(circle at 50% 0%, var(--semi-color-primary-light-default) 0%, transparent 60%),
+      linear-gradient(var(--semi-color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--semi-color-border) 1px, transparent 1px)
+    `,
+    backgroundSize: '100% 100%, 30px 30px, 30px 30px',
+    backgroundPosition: 'center top, center top, center top',
     minHeight: 'calc(100vh - 64px)',
     color: 'var(--semi-color-text-0)',
     overflow: 'hidden',
