@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { StatusContext } from '../../context/Status';
 import { IconBolt, IconSafe, IconVerify, IconCode, IconUserAdd } from '@douyinfe/semi-icons';
 
 /**
@@ -124,13 +125,15 @@ const contentMap = {
 const Home = () => {
   const { i18n } = useTranslation();
   const text = contentMap[i18n.language] || contentMap.en;
+  const [statusState] = useContext(StatusContext);
+  const docsLink = statusState?.status?.docs_link || 'https://docs.newapi.pro';
 
   useEffect(() => {
     document.title = text.title;
   }, [text.title]);
 
   const handleStart = () => window.location.href = '/register';
-  const handleDocs = () => window.open('https://docs.ai.zixiang.us', '_blank');
+  const handleDocs = () => window.open(docsLink, '_blank');
 
   return (
     <div style={styles.container}>
