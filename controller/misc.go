@@ -252,10 +252,22 @@ func SendEmailVerification(c *gin.Context) {
 	}
 	code := common.GenerateVerificationCode(6)
 	common.RegisterVerificationCodeWithKey(email, code, common.EmailVerificationPurpose)
-	subject := fmt.Sprintf("%s邮箱验证邮件", common.SystemName)
-	content := fmt.Sprintf("<p>您好，你正在进行%s邮箱验证。</p>"+
-		"<p>您的验证码为: <strong>%s</strong></p>"+
-		"<p>验证码 %d 分钟内有效，如果不是本人操作，请忽略。</p>", common.SystemName, code, common.VerificationValidMinutes)
+	subject := fmt.Sprintf("%s 邮箱验证", common.SystemName)
+	htmlBody := fmt.Sprintf(`
+		<p style="margin: 0 0 16px;">您好，</p>
+		<p style="margin: 0 0 16px;">您正在进行 <strong>%s</strong> 的邮箱验证操作。您的验证码是：</p>
+		<div style="background-color: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 8px; padding: 16px; margin: 24px 0; text-align: center;">
+			<span style="font-family: monospace; font-size: 32px; font-weight: 700; color: #111827; letter-spacing: 6px;">%s</span>
+		</div>
+		<p style="margin: 0 0 16px; font-size: 14px; color: #6b7280;">
+			验证码在 <strong>%d</strong> 分钟内有效。请勿将此验证码泄露给他人。
+		</p>
+		<p style="margin: 0; font-size: 14px; color: #6b7280;">
+			如果这不是您的操作，请忽略此邮件。
+		</p>
+	`, common.SystemName, code, common.VerificationValidMinutes)
+	
+	content := buildPremiumEmailTemplate(common.SystemName, subject, htmlBody)
 	err := common.SendEmail(subject, email, content)
 	if err != nil {
 		common.ApiError(c, err)
@@ -287,11 +299,30 @@ func SendPasswordResetEmail(c *gin.Context) {
 	code := common.GenerateVerificationCode(0)
 	common.RegisterVerificationCodeWithKey(email, code, common.PasswordResetPurpose)
 	link := fmt.Sprintf("%s/user/reset?email=%s&token=%s", system_setting.ServerAddress, email, code)
-	subject := fmt.Sprintf("%s密码重置", common.SystemName)
-	content := fmt.Sprintf("<p>您好，你正在进行%s密码重置。</p>"+
-		"<p>点击 <a href='%s'>此处</a> 进行密码重置。</p>"+
-		"<p>如果链接无法点击，请尝试点击下面的链接或将其复制到浏览器中打开：<br> %s </p>"+
-		"<p>重置链接 %d 分钟内有效，如果不是本人操作，请忽略。</p>", common.SystemName, link, link, common.VerificationValidMinutes)
+	subject := fmt.Sprintf("%s 密码重置", common.SystemName)
+	htmlBody := fmt.Sprintf(`
+		<p style="margin: 0 0 16px;">您好，</p>
+		<p style="margin: 0 0 16px;">我们收到了您重置 <strong>%s</strong> 账户密码的请求。点击下方按钮即可重置您的密码：</p>
+		<div style="text-align: center; margin: 32px 0;">
+			<a href="%s" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; display: inline-block; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">
+				立即重置密码
+			</a>
+		</div>
+		<p style="margin: 0 0 16px; font-size: 14px; color: #6b7280;">
+			该重置链接在 <strong>%d</strong> 分钟内有效。
+		</p>
+		<p style="margin: 0 0 8px; font-size: 14px; color: #6b7280;">
+			如果按钮无法点击，请复制并访问以下链接：
+		</p>
+		<p style="margin: 0; font-size: 12px; color: #9ca3af; word-break: break-all; background: #f9fafb; padding: 12px; border-radius: 6px;">
+			%s
+		</p>
+		<p style="margin: 16px 0 0; font-size: 14px; color: #6b7280;">
+			如果这不是您的操作，请忽略此邮件。
+		</p>
+	`, common.SystemName, link, common.VerificationValidMinutes, link)
+
+	content := buildPremiumEmailTemplate(common.SystemName, subject, htmlBody)
 	err := common.SendEmail(subject, email, content)
 	if err != nil {
 		common.ApiError(c, err)
@@ -339,4 +370,52 @@ func ResetPassword(c *gin.Context) {
 		"data":    password,
 	})
 	return
+}
+
+// buildPremiumEmailTemplate 生成带有品牌外观的高级 HTML 邮件模板
+func buildPremiumEmailTemplate(systemName, title, bodyContent string) string {
+	return fmt.Sprintf(`
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%s</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; color: #334155;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+        <!-- Card -->
+        <div style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #e2e8f0;">
+
+            <!-- Header -->
+            <div style="background: linear-gradient(135deg, #1e3a8a 0%%, #3b82f6 100%%); padding: 32px 40px; text-align: center;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 0.5px;">%s</h1>
+            </div>
+
+            <!-- Content Area -->
+            <div style="padding: 40px;">
+                <h2 style="margin: 0 0 24px; font-size: 20px; font-weight: 600; color: #0f172a;">%s</h2>
+
+                <div style="font-size: 16px; color: #334155;">
+                    %s
+                </div>
+            </div>
+
+            <!-- Footer Divider -->
+            <div style="border-top: 1px solid #f1f5f9; margin: 0 40px;"></div>
+
+            <!-- Footer Area -->
+            <div style="padding: 24px 40px; background-color: #fafafa; text-align: center;">
+                <p style="margin: 0 0 8px; font-size: 13px; color: #64748b;">
+                    此邮件由 <strong>%s</strong> 系统自动发送，请勿直接回复。
+                </p>
+                <p style="margin: 0; font-size: 12px; color: #94a3b8;">
+                    &copy; 2024 %s. All rights reserved.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>`, title, systemName, title, bodyContent, systemName, systemName)
 }
