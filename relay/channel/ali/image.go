@@ -1,7 +1,6 @@
 package ali
 
 import (
-	"context"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -19,14 +18,13 @@ import (
 	"github.com/QuantumNous/new-api/types"
 
 	"github.com/gin-gonic/gin"
+	"github.com/samber/lo"
 )
 
 func oaiImage2AliImageRequest(info *relaycommon.RelayInfo, request dto.ImageRequest, isSync bool) (*AliImageRequest, error) {
 	var imageRequest AliImageRequest
 	imageRequest.Model = request.Model
 	imageRequest.ResponseFormat = request.ResponseFormat
-	logger.LogJson(context.Background(), "oaiImage2Ali request extra", request.Extra)
-	logger.LogDebug(context.Background(), "oaiImage2Ali request isSync: "+fmt.Sprintf("%v", isSync))
 	if request.Extra != nil {
 		if val, ok := request.Extra["parameters"]; ok {
 			err := common.Unmarshal(val, &imageRequest.Parameters)
@@ -37,7 +35,7 @@ func oaiImage2AliImageRequest(info *relaycommon.RelayInfo, request dto.ImageRequ
 			// 兼容没有parameters字段的情况，从openai标准字段中提取参数
 			imageRequest.Parameters = AliImageParameters{
 				Size:      strings.Replace(request.Size, "x", "*", -1),
-				N:         int(request.N),
+				N:         int(lo.FromPtrOr(request.N, uint(1))),
 				Watermark: request.Watermark,
 			}
 		}

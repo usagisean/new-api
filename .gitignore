@@ -1,6 +1,7 @@
 .idea
 .vscode
 .zed
+.history
 upload
 *.exe
 *.db
@@ -19,6 +20,8 @@ tiktoken_cache
 .gomodcache/
 .cache
 # web/bun.lock (removed to allow CI/CD build)
+plans
+.claude
 
 electron/node_modules
 electron/dist
