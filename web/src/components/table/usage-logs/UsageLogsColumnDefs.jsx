@@ -172,12 +172,13 @@ function renderFirstUseTime(type, t) {
   }
 }
 
-function renderModelName(record, copyText, t) {
+function renderModelName(record, copyText, t, isAdminUser) {
   let other = getLogOther(record.other);
   let modelMapped =
     other?.is_model_mapped &&
     other?.upstream_model_name &&
-    other?.upstream_model_name !== '';
+    other?.upstream_model_name !== '' &&
+    isAdminUser;
   if (!modelMapped) {
     return renderModelTag(record.model_name, {
       onClick: (event) => {
@@ -380,7 +381,7 @@ export const getLogsColumns = ({
       dataIndex: 'model_name',
       render: (text, record, index) => {
         return record.type === 0 || record.type === 2 || record.type === 5 ? (
-          <>{renderModelName(record, copyText, t)}</>
+          <>{renderModelName(record, copyText, t, isAdminUser)}</>
         ) : (
           <></>
         );
